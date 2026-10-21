@@ -1,0 +1,614 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Português para Anastasia</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=Unbounded:wght@500;700&display=swap">
+<style>
+/* Layout: тетрадь в линейку с полями; зелёные чернила и тёплый янтарь для ударений, как пометки учительницы */
+:root{
+  --paper:#f4f8f5; --card:#ffffff; --text:#18231d; --muted:#56665c;
+  --ink:#16684a; --ink-soft:#e2f1e8; --red:#b25a07; --red-soft:#fbefdf;
+  --line:#d8e5dc; --ok:#1f6fa8; --ok-soft:#e1eef8;
+  --display:"Unbounded","Golos Text",system-ui,sans-serif;
+  --body:"Golos Text",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --r:12px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#0d1712; --card:#14231b; --text:#e4efe8; --muted:#9db3a5;
+  --ink:#7fd4ab; --ink-soft:#1c3427; --red:#f2a65a; --red-soft:#3a2a17;
+  --line:#25392d; --ok:#7cbcf0; --ok-soft:#172a3a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0d1712; --card:#14231b; --text:#e4efe8; --muted:#9db3a5;
+  --ink:#7fd4ab; --ink-soft:#1c3427; --red:#f2a65a; --red-soft:#3a2a17;
+  --line:#25392d; --ok:#7cbcf0; --ok-soft:#172a3a; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--text);font-family:var(--body);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+.wrap{max-width:880px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 72px}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+
+.top{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-bottom:14px;border-bottom:2px solid var(--line)}
+.brand h1{font-family:var(--display);font-weight:700;font-size:clamp(22px,5vw,30px);line-height:1.15;margin:0;color:var(--ink);letter-spacing:-.01em;text-wrap:balance}
+.brand p{margin:4px 0 0;color:var(--muted);font-size:14px}
+.sync{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:6px}
+.sync i{width:8px;height:8px;border-radius:50%;background:var(--muted);display:inline-block}
+.sync.on i{background:var(--ok)}
+
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);display:flex;gap:4px;overflow-x:auto;padding:10px 0;margin-bottom:8px;scrollbar-width:none}
+nav.tabs::-webkit-scrollbar{display:none}
+nav.tabs button{border:0;background:transparent;padding:8px 14px;border-radius:999px;font-weight:600;font-size:14px;color:var(--muted);white-space:nowrap;display:flex;align-items:center;gap:6px}
+nav.tabs button[aria-current="page"]{background:var(--ink);color:var(--paper)}
+nav.tabs .badge{background:var(--red);color:#fff;font-size:11px;border-radius:999px;padding:0 6px;line-height:18px}
+
+h2{font-family:var(--display);font-weight:500;font-size:20px;margin:28px 0 12px;text-wrap:balance}
+h3{font-size:17px;margin:0 0 6px;text-wrap:balance}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--red)}
+.muted{color:var(--muted)}
+.small{font-size:14px}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+.stack{display:flex;flex-direction:column;gap:12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px}
+.stat b{display:block;font-family:var(--display);font-size:22px;font-weight:500;color:var(--ink);font-variant-numeric:tabular-nums}
+.stat span{font-size:13px;color:var(--muted)}
+
+.hero{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px;position:relative;overflow:hidden;
+  background-image:repeating-linear-gradient(to bottom,transparent 0 31px,var(--line) 31px 32px);background-position:0 18px}
+.hero::before{content:"";position:absolute;top:0;bottom:0;left:44px;width:2px;background:var(--red);opacity:.45}
+.hero>*{position:relative;padding-left:40px}
+.hero h3{font-family:var(--display);font-weight:500;font-size:20px;margin:4px 0 6px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+
+.btn{border:1px solid var(--ink);background:var(--ink);color:var(--paper);padding:9px 16px;border-radius:999px;font-weight:600;font-size:14px}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.red{background:var(--red);border-color:var(--red);color:#fff}
+.btn.ok{background:var(--ok);border-color:var(--ok);color:var(--paper)}
+.btn:disabled{opacity:.5;cursor:default}
+.chip{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;background:var(--ink-soft);color:var(--ink)}
+.chip.done{background:var(--ok-soft);color:var(--ok)}
+.chip.red{background:var(--red-soft);color:var(--red)}
+
+.phase{margin-top:22px}
+.week{background:var(--card);border:1px solid var(--line);border-radius:var(--r);margin-bottom:10px;overflow:hidden}
+.week summary{list-style:none;padding:14px 16px;cursor:pointer;display:flex;gap:12px;align-items:center}
+.week summary::-webkit-details-marker{display:none}
+.wnum{font-family:var(--display);font-size:13px;color:var(--red);min-width:30px}
+.wbody{flex:1;min-width:0}
+.wbody b{display:block}
+.prog{height:4px;background:var(--ink-soft);border-radius:4px;margin-top:6px;overflow:hidden}
+.prog i{display:block;height:100%;background:var(--ok)}
+.lessons{border-top:1px solid var(--line)}
+.lrow{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--line);padding:11px 16px}
+.lrow:last-child{border-bottom:0}
+.lrow:hover{background:var(--ink-soft)}
+.tick{width:22px;height:22px;border-radius:50%;border:2px solid var(--line);flex:none;display:grid;place-items:center;font-size:13px;color:var(--paper)}
+.tick.on{background:var(--ok);border-color:var(--ok)}
+.lrow .lt{flex:1;min-width:0}
+.lrow .ld{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.future{opacity:.8}
+.future li{margin:2px 0}
+
+.lesson-head{margin-top:8px}
+.lesson-head h2{margin:6px 0 4px;font-size:24px}
+.back{background:none;border:0;color:var(--ink);font-weight:600;padding:4px 0}
+.step{margin-top:22px}
+.step>.sh{display:flex;align-items:baseline;gap:10px;margin-bottom:10px}
+.step>.sh .n{font-family:var(--display);color:var(--red);font-size:14px}
+.step>.sh h3{margin:0;font-size:17px}
+.step>.sh .t{margin-left:auto;font-size:12px;color:var(--muted);white-space:nowrap}
+.gram{border-left:3px solid var(--red);background:var(--card);padding:12px 16px;border-radius:0 var(--r) var(--r) 0}
+
+.phr{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;display:grid;gap:2px}
+.phr .ru{font-size:21px;font-weight:600;line-height:1.3;color:var(--ink);overflow-wrap:anywhere}
+.st{color:var(--red);font-weight:700;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px}
+.lbl{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--red);margin-top:6px}
+.phr .pr{font-size:15px;font-weight:500}
+.phr .pr b,.pron b{color:var(--red);font-weight:700}
+.phr .pt{font-size:15px}
+.phr .nt{font-size:13px;color:var(--muted);margin-top:4px}
+.acts{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.say{border:1px solid var(--line);background:transparent;border-radius:999px;padding:5px 12px;font-size:13px;font-weight:600;color:var(--ink);display:inline-flex;align-items:center;gap:6px}
+.say:hover{border-color:var(--ink)}
+.say svg{width:12px;height:12px;fill:currentColor}
+
+.rev{display:grid;gap:8px}
+.ritem{background:var(--card);border:1px dashed var(--line);border-radius:var(--r);padding:12px 14px}
+.ritem .q{font-weight:600}
+.ritem .src{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.ritem .a{margin-top:8px}
+
+.dlg{display:grid;gap:8px}
+.bub{max-width:88%;padding:10px 14px;border-radius:16px;background:var(--card);border:1px solid var(--line)}
+.bub.g{justify-self:end;background:var(--ink-soft);border-color:transparent}
+.bub .who{font-size:11px;font-weight:700;color:var(--red);letter-spacing:.06em;text-transform:uppercase}
+.bub .ru{font-weight:600;color:var(--ink)}
+.bub .pt{font-size:14px;color:var(--muted)}
+.bub .pt.hide{filter:blur(5px);cursor:pointer;user-select:none}
+
+textarea{width:100%;min-height:96px;border:1px solid var(--line);border-radius:var(--r);background:var(--card);padding:12px;resize:vertical}
+input[type=text]{width:100%;border:1px solid var(--line);border-radius:var(--r);background:var(--card);padding:10px 12px}
+.rec{display:grid;gap:8px}
+.rec audio{width:100%}
+.mission{background:var(--red-soft);border-radius:var(--r);padding:14px 16px}
+.mission b{color:var(--red)}
+
+.close-list{display:grid;gap:8px}
+.cl{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:10px 14px}
+.cl .q{flex:1;min-width:160px}
+.seg{display:flex;gap:4px}
+.seg button{border:1px solid var(--line);background:transparent;border-radius:999px;padding:4px 10px;font-size:13px;font-weight:600}
+.seg button.on.y{background:var(--ok);border-color:var(--ok);color:var(--paper)}
+.seg button.on.n{background:var(--red);border-color:var(--red);color:#fff}
+
+.quiz .opt{display:block;width:100%;text-align:left;border:1px solid var(--line);background:var(--card);border-radius:var(--r);padding:12px 14px;margin-top:8px;font-size:18px;font-weight:600;color:var(--ink)}
+.quiz .opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.quiz .opt.wrong{border-color:var(--red);background:var(--red-soft)}
+.bar{height:6px;background:var(--ink-soft);border-radius:6px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--ink)}
+
+.fc{min-height:220px;display:flex;flex-direction:column;justify-content:center;gap:8px;text-align:center;padding:28px 18px}
+.fc .ru{font-size:28px;font-weight:600;color:var(--ink)}
+.fc .pt{font-size:20px;font-weight:600}
+.empty{text-align:center;padding:28px 18px}
+.err{display:flex;gap:10px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px}
+.err p{margin:0;flex:1;min-width:0;white-space:pre-wrap}
+.err small{display:block;color:var(--muted);font-size:12px}
+.linkbtn{background:none;border:0;color:var(--red);font-size:13px;font-weight:600;padding:2px}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--text);color:var(--paper);padding:10px 16px;border-radius:999px;font-size:14px;z-index:20;max-width:calc(100% - 32px)}
+.legend{font-size:13px;color:var(--muted)}
+.pause{border:0;background:none;color:var(--ink);font-weight:600;font-size:13px;padding:0}
+ol.guide li{margin-bottom:8px}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <h1>Português para Anastasia</h1>
+      <p>Бразильский португальский с нуля, вместе с Габриэлем</p>
+    </div>
+    <div class="sync"><i></i><span>Прогресс сохраняется на этом устройстве</span></div>
+  </header>
+  <nav class="tabs" id="tabs" aria-label="Разделы"></nav>
+  <main id="view"></main>
+</div>
+<div class="toast" id="toast" hidden></div>
+<script>
+const W = [
+{n:1, title:"Звуки португальского", meta:"Научиться читать португальские слова и произносить звуки, которых нет в русском.",
+ missions:["Oi, obrigada, sim, não, tchau, por favor, mãe, pão", "Rio, carro, caro, noite, tarde, dia, filho, casa"],
+ dlg:[["Г","Oi! Tudo bem?","Привет! Как дела?"],["А","Tudo bem, obrigada. E você?","Всё хорошо, спасибо. А у тебя?"],["Г","Tudo ótimo!","Всё отлично!"],["А","Que bom!","Как здорово!"]],
+ help:{t:"Помоги Габриэлю: звуки русского", x:"На этой неделе Габриэль учит Ы, Ш, Щ, Ж и Ч. Попроси его сказать мы, ты, щи, журнал и чай и поправь его. А он поправит твои носовые звуки в não и mãe."},
+ L:[
+  {t:"Первые слова", g:"Ударный слог в произношении написан заглавными буквами. Женщина говорит obrigada, мужчина obrigado: слово меняется по роду того, кто благодарит.",
+   p:[["Oi!","ой","Привет!"],["Sim","СИН","Да","Конечная m делает гласную носовой: «н» почти не слышно."],["Não","НАУН","Нет","Носовой звук: воздух идёт через нос."],["Obrigada!","о-бри-ГА-да","Спасибо! (говорит женщина)","Габриэль говорит obrigado."],["Tchau!","ЧАУ","Пока!"],["Por favor","пур фа-ВОР","Пожалуйста (просьба)"]],
+   task:"Не подглядывая, напиши по-португальски: привет, да, нет, спасибо и пока."},
+  {t:"Носовые гласные", g:"Тильда (~) и буквы m или n в конце слога делают гласную носовой: часть воздуха идёт через нос, а сама «н» почти не звучит. В русском таких звуков нет, поэтому это главный звук недели.",
+   p:[["mãe","МАЙН","мама"],["pão","ПАУН","хлеб"],["bem","БЕЙН","хорошо"],["um","УН","один"],["irmão","ир-МАУН","брат"],["amanhã","а-ма-НЬЯН","завтра"]],
+   task:"Запиши произношение слов mãe, pão и bem и скажи их вслух 5 раз."},
+  {t:"Буква R", g:"R в начале слова и двойная RR звучат как русское Х: Rio звучит «Хиу». Одна R между гласными звучит как короткое русское Р. Поэтому carro (машина) и caro (дорогой) это разные слова.",
+   p:[["Rio","ХИ-у","Рио"],["carro","КА-ху","машина"],["caro","КА-ру","дорогой"],["rua","ХУ-а","улица"],["amor","а-МОР","любовь, любимый","Конечная R мягкая, иногда почти не слышна."],["porta","ПОР-та","дверь"]],
+   task:"Скажи вслух пары carro / caro и попроси Габриэля проверить."},
+  {t:"TE, DE и конечные гласные", g:"В бразильском варианте T и D перед звуком «и» смягчаются: te и ti звучат «чи», de и di звучат «джи». Безударная o в конце слова звучит как «у», безударная e как «и».",
+   p:[["noite","НОЙ-чи","ночь, вечер"],["tarde","ТАР-джи","день (после обеда)"],["dia","ДЖИ-а","день"],["leite","ЛЕЙ-чи","молоко"],["obrigado","о-бри-ГА-ду","спасибо (говорит мужчина)"],["gente","ЖЕН-чи","люди"]],
+   task:"Найди в этом уроке все слова, где T или D звучат как «ч» или «дж»."},
+  {t:"LH, NH, Ç, S и X", g:"LH звучит как «ль» перед гласной, NH как «нь». Ç всегда «с». Одна S между гласными звучит как «з»: casa звучит «каза». X часто звучит как «ш».",
+   p:[["filho","ФИ-лью","сын"],["mulher","му-ЛЬЕР","женщина"],["banho","БА-нью","душ, ванна"],["maçã","ма-САН","яблоко"],["casa","КА-за","дом"],["caixa","КАЙ-ша","коробка"]],
+   task:"Прочитай вслух все 30 слов недели в правильном порядке."},
+  {t:"Повторение недели", kind:"rev", scope:"week", task:"Прочитай вслух все слова недели и запиши аудиозадание 2."}
+ ]},
+{n:2, title:"Знакомство и «как прошёл день»", meta:"Начать разговор, представиться и задать вопрос в ответ.",
+ missions:["Представься за 30 секунд: имя, страна, город", "Спроси Габриэля, как прошёл его день, и отреагируй на ответ"],
+ dlg:[["А","Oi! Meu nome é Anastasia. Eu sou da Rússia.","Привет! Меня зовут Анастасия. Я из России."],["Г","Prazer! Eu sou o Gabriel.","Приятно познакомиться! Я Габриэль."],["А","Como foi o seu dia?","Как прошёл твой день?"],["Г","Foi bom, mas estou cansado. E o seu?","Хорошо, но я устал. А твой?"],["А","Foi ótimo!","Отлично!"]],
+ help:{t:"Помоги Габриэлю: знакомство", x:"Габриэль учит Меня зовут..., Я из Бразилии и Как прошёл твой день?. Задай ему эти вопросы по-русски и поправь ударения."},
+ L:[
+  {t:"Представиться", g:"Глагол «быть» в португальском обязателен: eu sou = я есть. Da Rússia = из России (de + a = da).",
+   p:[["Meu nome é Anastasia.","МЕУ НО-ми э а-нас-та-ЗИ-а","Меня зовут Анастасия."],["Eu sou da Rússia.","эу СОУ да ХУ-сья","Я из России."],["Eu moro em...","эу МО-ру эйн","Я живу в..."],["Prazer!","пра-ЗЕР","Приятно познакомиться!"]],
+   task:"Напиши своё знакомство из трёх фраз."},
+  {t:"Как прошёл день", g:"Tudo bem? значит «Как дела?», а отвечают Tudo! или Tudo bem, никогда не «Sim». E você? задаёт вопрос в ответ.",
+   p:[["Tudo bem?","ТУ-ду БЕЙН","Как дела?"],["Tudo, e você?","ТУ-ду, и во-СЕ","Всё хорошо, а у тебя?"],["Como foi o seu dia?","КО-му ФОЙ у СЕУ ДЖИ-а","Как прошёл твой день?"],["Foi ótimo!","фой О-чи-му","Отлично!"]],
+   task:"Напиши Габриэлю: Oi! Como foi o seu dia?"},
+  {t:"Как я себя чувствую", g:"Прилагательное меняется по роду: ты говоришь cansada, Габриэль говорит cansado. Estou = «я (сейчас)», этот глагол нужен всегда.",
+   p:[["Estou cansada.","ис-ТОУ кан-СА-да","Я устала."],["Mais ou menos.","МАЙЗ оу МЕ-нус","Так себе."],["Estou ocupada.","ис-ТОУ о-ку-ПА-да","Я занята."],["Foi um dia difícil.","фой ун ДЖИ-а джи-ФИ-сиу","Был трудный день.","Конечная L звучит почти как «у»."]],
+   task:"Напиши двумя фразами, как прошёл твой день сегодня."},
+  {t:"Реакции", g:"Короткие реакции поддерживают разговор и показывают, что ты поняла.",
+   p:[["Eu também.","эу там-БЕЙН","Я тоже."],["Sério?","СЭ-рьу","Серьёзно?"],["Entendi.","ин-тен-ДЖИ","Понятно."],["Que legal!","ки ле-ГАУ","Как здорово!"]],
+   task:"Ответь на «Hoje eu descansei» (сегодня я отдыхал) реакцией и вопросом."},
+  {t:"Понимать его ответы", g:"Габриэль может ответить по-разному. Научись узнавать эти ответы раньше, чем начнёшь их использовать.",
+   p:[["Tudo tranquilo.","ТУ-ду тран-КУИ-лу","Всё спокойно, всё норм."],["De boa.","джи БО-а","Нормально (сленг)."],["Péssimo.","ПЭ-си-му","Ужасно."],["Como sempre.","КО-му СЕН-при","Как обычно."]],
+   task:"На каждый ответ напиши, что бы ты ответила."},
+  {t:"Повторение недели", kind:"rev", scope:"week", task:"Диалог на 2 минуты: представься и спроси, как прошёл день."}
+ ]},
+{n:3, title:"Распорядок дня и настоящее время", meta:"Рассказать о своём дне и спросить о его дне.",
+ missions:["4 фразы о твоей работе и занятиях", "Твой обычный день за 45 секунд"],
+ dlg:[["Г","O que você está fazendo agora?","Что ты сейчас делаешь?"],["А","Eu ainda estou no trabalho. E você?","Я ещё на работе. А ты?"],["Г","Estou em casa, assistindo uma série.","Я дома, смотрю сериал."],["А","Qual série?","Какой сериал?"]],
+ help:{t:"Помоги Габриэлю: распорядок дня", x:"Габриэль учит я работаю, я занимаюсь дзюдо и что ты делаешь сейчас?. Спроси его о его дне по-русски."},
+ L:[
+  {t:"Работа", g:"Глаголы на -ar: eu trabalho (я работаю), você trabalha (ты работаешь). В Бразилии você (ты) спрягается как «он/она».",
+   p:[["Eu trabalho em...","эу тра-БА-лью эйн","Я работаю в..."],["Onde você trabalha?","ОН-джи во-СЕ тра-БА-лья","Где ты работаешь?"],["Eu trabalho de casa.","эу тра-БА-лью джи КА-за","Я работаю из дома."],["O que você faz?","у ки во-СЕ ФАЙС","Чем ты занимаешься? (о работе)"]],
+   task:"Расскажи Габриэлю, где ты работаешь, и спроси о его работе."},
+  {t:"Спряжение на -ar", g:"falar: eu falo, você fala, ele/ela fala, nós falamos, vocês falam. Так же спрягаются trabalhar, estudar, morar.",
+   p:[["Eu falo um pouco de português.","эу ФА-лу ун ПОУ-ку джи пор-ту-ГЕС","Я немного говорю по-португальски."],["Você fala inglês?","во-СЕ ФА-ла ин-ГЛЕС","Ты говоришь по-английски?"],["Eu estudo português.","эу ис-ТУ-ду пор-ту-ГЕС","Я учу португальский."],["Eu não entendo.","эу НАУН ин-ТЕН-ду","Я не понимаю."]],
+   task:"Проспрягай estudar для eu, você и nós, не подглядывая."},
+  {t:"Спорт", g:"Fazer (делать) неправильный: eu faço, você faz. В Бразилии говорят fazer academia (ходить в спортзал) и fazer judô.",
+   p:[["Eu faço academia.","эу ФА-су а-ка-де-МИ-а","Я хожу в спортзал."],["Ele faz judô.","Э-ли фаз жу-ДО","Он занимается дзюдо."],["Hoje eu tenho treino.","О-жи эу ТЕ-нью ТРЕЙ-ну","Сегодня у меня тренировка."],["Você pratica esporte?","во-СЕ пра-ЧИ-ка ис-ПОР-чи","Ты занимаешься спортом?"]],
+   task:"Спроси Габриэля про дзюдо и расскажи, занимаешься ли ты спортом."},
+  {t:"Глаголы на -er и -ir", g:"Assistir (смотреть фильм, сериал): eu assisto, você assiste. Ler (читать): eu leio, você lê. Escrever (писать): eu escrevo, você escreve.",
+   p:[["Eu assisto séries.","эу а-СИС-ту СЭ-рис","Я смотрю сериалы."],["O que você está assistindo?","у ки во-СЕ ис-ТА а-сис-ЧИН-ду","Что ты сейчас смотришь?"],["Eu leio livros.","эу ЛЕЙ-у ЛИ-врус","Я читаю книги."],["Eu escrevo para você.","эу ис-КРЕ-ву ПА-ра во-СЕ","Я пишу тебе."]],
+   task:"Напиши 2 фразы с assistir и одну с ler."},
+  {t:"Части дня", g:"De manhã (утром), à tarde (днём), à noite (вечером), agora (сейчас). Estou + -ndo = «я сейчас делаю»: estou trabalhando.",
+   p:[["de manhã","джи ма-НЬЯН","утром"],["à tarde","а ТАР-джи","днём"],["à noite","а НОЙ-чи","вечером"],["agora","а-ГО-ра","сейчас"],["Eu ainda estou no trabalho.","эу а-ИН-да ис-ТОУ ну тра-БА-лью","Я ещё на работе."]],
+   task:"Опиши свой обычный день четырьмя фразами: утро, день, вечер и сейчас."},
+  {t:"Повторение недели", kind:"rev", scope:"week", task:"Расскажи вслух о своём обычном дне и запиши аудиозадание 2."}
+ ]},
+{n:4, title:"Вкусы и мнения", meta:"Говорить о том, что тебе нравится, спрашивать и реагировать.",
+ missions:["5 вещей, которые тебе нравятся", "Спроси Габриэля о трёх вкусах и отреагируй"],
+ dlg:[["А","O que você gosta de fazer?","Что ты любишь делать?"],["Г","Eu gosto de cozinhar. E você?","Я люблю готовить. А ты?"],["А","Eu adoro passear e ler.","Я обожаю гулять и читать."],["Г","Você gosta de comida brasileira?","Тебе нравится бразильская еда?"],["А","Não sei, ainda não provei!","Не знаю, ещё не пробовала!"]],
+ help:{t:"Помоги Габриэлю: мне нравится", x:"Габриэль учит мне нравится, я люблю + глагол и какой твой любимый фильм?. Это обратная конструкция по сравнению с португальским gostar de."},
+ L:[
+  {t:"Gostar de", g:"Gostar всегда с предлогом de: gosto de música. В отличие от «мне нравится», здесь тот, кто любит, это подлежащее. De + a = da, de + o = do.",
+   p:[["Eu gosto de música.","эу ГОС-ту джи МУ-зи-ка","Мне нравится музыка."],["Eu gosto da sua voz.","эу ГОС-ту да СУ-а ВОС","Мне нравится твой голос."],["Você gosta de comida brasileira?","во-СЕ ГОС-та джи ко-МИ-да бра-зи-ЛЕЙ-ра","Тебе нравится бразильская еда?"],["Eu gosto muito.","эу ГОС-ту МУЙН-ту","Мне очень нравится."]],
+   task:"Напиши 3 фразы с gosto de."},
+  {t:"Множественное число", g:"Множественное число обычно образуется с помощью s: gato, gatos; montanha, montanhas.",
+   p:[["Eu gosto de cachorros.","эу ГОС-ту джи ка-ШО-хус","Я люблю собак."],["Eu gosto de montanhas.","эу ГОС-ту джи мон-ТА-ньяс","Я люблю горы."],["Você gosta de gatos?","во-СЕ ГОС-та джи ГА-тус","Ты любишь кошек?"],["Eu amo a natureza.","эу А-му а на-ту-РЕ-за","Я обожаю природу."]],
+   task:"Спроси Габриэля о животных и природе."},
+  {t:"Люблю делать", g:"Gosto de, adoro и amo + инфинитив: «люблю делать». Eu te amo (я тебя люблю) в Бразилии говорят чаще и легче, чем по-русски.",
+   p:[["Eu amo cozinhar.","эу А-му ко-зи-НЬЯР","Обожаю готовить."],["Eu adoro passear.","эу а-ДО-ру па-си-АР","Обожаю гулять."],["Eu adoro viajar.","эу а-ДО-ру ви-а-ЖАР","Обожаю путешествовать."],["O que você gosta de fazer?","у ки во-СЕ ГОС-та джи фа-ЗЕР","Что ты любишь делать?"]],
+   task:"Напиши 3 вещи, которые ты обожаешь делать."},
+  {t:"Любимое", g:"Род: o filme favorito (м. р.), a música favorita (ж. р.). Seu и sua = твой и твоя.",
+   p:[["Qual é o seu filme favorito?","КУАУ э у СЕУ ФИУ-ми фа-ву-РИ-ту","Какой твой любимый фильм?"],["Qual é a sua música favorita?","КУАУ э а СУ-а МУ-зи-ка фа-ву-РИ-та","Какая твоя любимая песня?"],["Minha comida favorita é...","МИ-нья ко-МИ-да фа-ву-РИ-та э","Моя любимая еда..."],["Você gosta de música brasileira?","во-СЕ ГОС-та джи МУ-зи-ка бра-зи-ЛЕЙ-ра","Ты любишь бразильскую музыку?"]],
+   task:"Спроси Габриэля о двух любимых вещах и расскажи о своих."},
+  {t:"Согласиться и не согласиться", g:"Отрицание: não ставится перед глаголом, как русское «не»: não gosto.",
+   p:[["Eu também.","эу там-БЕЙН","Я тоже."],["Eu não.","эу НАУН","А я нет."],["Que massa!","ки МА-са","Класс! (сленг)"],["Não gosto muito.","НАУН ГОС-ту МУЙН-ту","Мне не очень нравится."]],
+   task:"Ответь на: Eu gosto de calor. Eu não gosto de frio."},
+  {t:"Повторение недели", kind:"rev", scope:"week", task:"Разговор на 3 минуты о вкусах, с вопросами и реакциями."}
+ ]},
+{n:5, title:"Прошедшее время", meta:"Рассказать, что ты делала, и спросить, что делал он.",
+ missions:["5 фраз о вчерашнем дне", "Расскажи о своих выходных за 1 минуту"],
+ dlg:[["А","Como foi o fim de semana?","Как прошли выходные?"],["Г","Foi bom! Eu fui ao treino e depois assisti um filme.","Хорошо! Я ходил на тренировку, а потом смотрел фильм."],["А","Qual filme?","Какой фильм?"],["Г","Uma comédia. E você, o que fez?","Комедию. А ты что делала?"]],
+ help:{t:"Помоги Габриэлю: род в прошедшем", x:"В русском прошедшее время меняется по роду: он говорит я был, ты говоришь я была. Для бразильца это непривычно. Проверь, говорит ли он тебе ты была, ты спала."},
+ L:[
+  {t:"Estava", g:"Estava не меняется по роду: eu estava говорят и мужчина, и женщина. Это проще, чем был и была.",
+   p:[["Onde você estava?","ОН-джи во-СЕ ис-ТА-ва","Где ты был?"],["Eu estava no trabalho.","эу ис-ТА-ва ну тра-БА-лью","Я была на работе."],["Eu estava em casa.","эу ис-ТА-ва эйн КА-за","Я была дома."],["Nós estávamos no parque.","НОС ис-ТА-ва-мус ну ПАР-ки","Мы были в парке."]],
+   task:"Напиши, где ты была вчера, сегодня утром и в выходные."},
+  {t:"Прошедшее время", g:"Глаголы на -ar: eu trabalhei, você trabalhou. На -er и -ir: eu assisti, você assistiu. Fazer неправильный: eu fiz, você fez. И никакого рода!",
+   p:[["O que você fez ontem?","у ки во-СЕ ФЕС ОН-тейн","Что ты делал вчера?"],["Eu trabalhei o dia todo.","эу тра-ба-ЛЬЕЙ у ДЖИ-а ТО-ду","Я работала весь день."],["Eu assisti um filme.","эу а-сис-ЧИ ун ФИУ-ми","Я посмотрела фильм."],["Eu fiz o jantar.","эу ФИЗ у жан-ТАР","Я приготовила ужин."]],
+   task:"Расскажи о трёх вещах, которые ты делала вчера."},
+  {t:"Выходные", g:"Fim de semana = выходные (буквально «конец недели»), в единственном числе: o fim de semana foi bom.",
+   p:[["Como foi o fim de semana?","КО-му ФОЙ у ФИН джи си-МА-на","Как прошли выходные?"],["Foi bom, eu descansei.","фой БОН, эу джис-кан-СЕЙ","Хорошо, я отдохнула."],["Eu encontrei os amigos.","эу ин-кон-ТРЕЙ уз а-МИ-гус","Я встретилась с друзьями."],["Nada de especial.","НА-да джи ис-пе-си-АУ","Ничего особенного."]],
+   task:"Спроси Габриэля про выходные и расскажи о своих."},
+  {t:"Ir в прошедшем", g:"Ir (идти, ехать) в прошедшем: eu fui, você foi. Foi значит также «был, была» (от ser): o dia foi bom.",
+   p:[["Eu fui à academia.","эу ФУЙ а а-ка-де-МИ-а","Я ходила в спортзал."],["Eu fui ao mercado.","эу ФУЙ ау мер-КА-ду","Я ходила в магазин."],["O treino foi pesado.","у ТРЕЙ-ну фой пе-ЗА-ду","Тренировка была тяжёлая."],["Estou muito cansada.","ис-ТОУ МУЙН-ту кан-СА-да","Я очень устала."]],
+   task:"Расскажи, куда ты ходила на этой неделе."},
+  {t:"Вопросы ему", g:"Вопрос часто отличается от утверждения только интонацией: Você dormiu bem? Голос поднимается в конце.",
+   p:[["Você dormiu bem?","во-СЕ дур-МИУ БЕЙН","Ты хорошо спал?"],["Você foi trabalhar hoje?","во-СЕ ФОЙ тра-ба-ЛЬЯР О-жи","Ты ходил сегодня на работу?"],["Você já almoçou?","во-СЕ ЖА ау-му-СОУ","Ты уже пообедал?"],["O que você assistiu?","у ки во-СЕ а-сис-ЧИУ","Что ты смотрел?"]],
+   task:"Напиши Габриэлю «доброе утро» с вопросом в прошедшем времени: Bom dia! Você dormiu bem?"},
+  {t:"Повторение недели", kind:"rev", scope:"week", task:"Расскажи о своих выходных за 1 минуту и запиши аудиозадание 2."}
+ ]},
+{n:6, title:"Чувства и нежность", meta:"Выражать нежность, тоску и поддержку естественно, без пафоса.",
+ missions:["5 фраз о чувствах", "Голосовое сообщение Габриэлю на 30 секунд"],
+ dlg:[["Г","Estou triste hoje.","Мне сегодня грустно."],["А","O que aconteceu?","Что случилось?"],["Г","Foi um dia difícil no trabalho.","Был трудный день на работе."],["А","Não se preocupa. Vai ficar tudo bem. Estou aqui com você.","Не переживай. Всё будет хорошо. Я рядом."]],
+ help:{t:"Помоги Габриэлю: скучаю", x:"Габриэль учит я скучаю по тебе, мне грустно и всё будет хорошо. Объясни ему разницу между скучно и скучаю: он легко их путает."},
+ L:[
+  {t:"Saudade", g:"Saudade: знаменитое слово, которое не переводится одним словом. Это тоска по тому, кого любишь и кого нет рядом. Estou com saudade de você = я скучаю по тебе.",
+   p:[["Estou com saudade.","ис-ТОУ кун сау-ДА-джи","Я скучаю."],["Sinto sua falta.","СИН-ту СУ-а ФАУ-та","Мне тебя не хватает."],["Penso em você.","ПЕН-су эйн во-СЕ","Я думаю о тебе."],["Sonhei com você.","су-НЬЕЙ кун во-СЕ","Ты мне снился."]],
+   task:"Напиши Габриэлю короткое сообщение о том, что скучаешь."},
+  {t:"Эмоции", g:"Чувства: estou + прилагательное. Не путай: entediada (мне скучно) и saudade (скучаю по кому-то).",
+   p:[["Estou triste.","ис-ТОУ ТРИС-чи","Мне грустно."],["Estou feliz.","ис-ТОУ фе-ЛИС","Я счастлива."],["Estou entediada.","ис-ТОУ ин-те-джи-А-да","Мне скучно."],["Estou bem.","ис-ТОУ БЕЙН","Я в порядке."]],
+   task:"Напиши, как ты себя чувствуешь сегодня и почему."},
+  {t:"Как он себя чувствует", g:"Se sentir (чувствовать себя): eu me sinto, você se sente. Estou me sentindo = я сейчас чувствую себя.",
+   p:[["Como você está se sentindo?","КО-му во-СЕ ис-ТА си сен-ЧИН-ду","Как ты себя чувствуешь?"],["Não estou me sentindo bem.","НАУН ис-ТОУ ми сен-ЧИН-ду БЕЙН","Я плохо себя чувствую."],["O que aconteceu?","у ки а-кон-те-СЕУ","Что случилось?"],["Estou preocupada com você.","ис-ТОУ прэ-у-ку-ПА-да кун во-СЕ","Я волнуюсь за тебя."]],
+   task:"Представь, что он написал: Não estou me sentindo bem. Напиши ответ."},
+  {t:"Поддержка", g:"Não se preocupa: разговорная форма, в письменной речи пишут não se preocupe. Бразильцы часто поддерживают словами força (держись) и parabéns (молодец).",
+   p:[["Vai ficar tudo bem.","ВАЙ фи-КАР ТУ-ду БЕЙН","Всё будет хорошо."],["Estou aqui com você.","ис-ТОУ а-КИ кун во-СЕ","Я рядом."],["Não se preocupa.","НАУН си прэ-у-КУ-па","Не переживай."],["Parabéns!","па-ра-БЕЙНС","Поздравляю! Молодец!"]],
+   task:"Напиши сообщение поддержки на трудный для него день."},
+  {t:"Нежность", g:"Ласковые слова в Бразилии: amor (любимый, любимая), querido (дорогой), lindo (красавчик). Их говорят часто и легко.",
+   p:[["Eu gosto de você.","эу ГОС-ту джи во-СЕ","Ты мне нравишься."],["É bom estar com você.","э БОН ис-ТАР кун во-СЕ","Мне хорошо с тобой."],["Boa noite, dorme bem.","БО-а НОЙ-чи, ДОР-ми БЕЙН","Спокойной ночи, спи хорошо."],["Bons sonhos.","БОНС СО-ньюс","Сладких снов."]],
+   task:"Напиши естественное сообщение на ночь."},
+  {t:"Повторение недели", kind:"rev", scope:"week", task:"Запиши голосовое сообщение из аудиозадания 2."}
+ ]},
+{n:7, title:"Числа, время и звонки", meta:"Договориться о видеозвонке со временем и решить проблемы со связью.",
+ missions:["Числа от 1 до 20", "Договорись о звонке: день и время"],
+ dlg:[["А","Vamos nos falar?","Созвонимся?"],["Г","Vamos! Quando é bom para você?","Давай! Когда тебе удобно?"],["А","Que horas são aí?","Сколько у тебя сейчас времени?"],["Г","Aqui são três da tarde.","У меня три часа дня."],["А","Eu te ligo daqui a uma hora.","Я позвоню тебе через час."]],
+ help:{t:"Помоги Габриэлю: числа", x:"Габриэль учит числа от 1 до 24 и фразу меня слышно?. Продиктуй ему по-русски время звонка и проверь, понял ли он."},
+ L:[
+  {t:"Числа от 1 до 10", g:"Один и два меняются по роду: um/uma, dois/duas. В номерах телефона вместо seis (шесть) часто говорят meia.",
+   p:[["um, uma","УН, У-ма","один, одна"],["dois, duas","ДОЙС, ДУ-ас","два, две"],["três","ТРЕС","три"],["quatro","КУА-тру","четыре"],["cinco","СИН-ку","пять"],["seis","СЕЙС","шесть"],["sete","СЭ-чи","семь"],["oito","ОЙ-ту","восемь"],["nove","НО-ви","девять"],["dez","ДЭС","десять"]],
+   task:"Напиши свой номер телефона словами по-португальски."},
+  {t:"До 20 и время", g:"Время: são + число + horas. Для часа: é uma hora. Às = «в» (во сколько): às sete.",
+   p:[["onze","ОН-зи","одиннадцать"],["doze","ДО-зи","двенадцать"],["vinte","ВИН-чи","двадцать"],["Que horas são?","ки О-рас САУН","Который час?"],["São três horas.","САУН ТРЕЙЗ О-рас","Три часа."],["Às sete horas.","ас СЭ-чи О-рас","В семь часов."]],
+   task:"Напиши, во сколько ты встаёшь, работаешь и ложишься спать."},
+  {t:"Разница во времени", g:"Aqui (здесь) и aí (там, у тебя) очень удобны для разговора на расстоянии.",
+   p:[["Que horas são aí?","ки О-рас САУН а-И","Сколько у тебя сейчас времени?"],["Aqui são seis da manhã.","а-КИ САУН СЕЙС да ма-НЬЯН","У меня шесть утра."],["A diferença é de seis horas.","а джи-фе-РЕН-са э джи СЕЙЗ О-рас","Разница шесть часов.","Подставь вашу настоящую разницу."],["Quando é bom para você?","КУАН-ду э БОН ПА-ра во-СЕ","Когда тебе удобно?"]],
+   task:"Спроси его, сколько там времени и когда удобно поговорить."},
+  {t:"Видеозвонок", g:"Te = тебя: te ouvindo (слышу тебя), te vendo (вижу тебя). В бразильском te звучит «чи».",
+   p:[["Vamos nos falar?","ВА-мус нус фа-ЛАР","Созвонимся?"],["Você está me ouvindo?","во-СЕ ис-ТА ми оу-ВИН-ду","Ты меня слышишь?"],["Não estou te ouvindo bem.","НАУН ис-ТОУ чи оу-ВИН-ду БЕЙН","Я тебя плохо слышу."],["Não estou te vendo.","НАУН ис-ТОУ чи ВЕН-ду","Я тебя не вижу."],["Eu te ligo de volta.","эу чи ЛИ-гу джи ВОУ-та","Я перезвоню."]],
+   task:"Напиши, что ты скажешь, если звонок зависнет."},
+  {t:"Планы", g:"Будущее: ir + инфинитив, как «я собираюсь»: eu vou trabalhar, você vai fazer.",
+   p:[["Amanhã eu vou trabalhar.","а-ма-НЬЯН эу ВОУ тра-ба-ЛЬЯР","Завтра я буду работать."],["O que você vai fazer no fim de semana?","у ки во-СЕ ВАЙ фа-ЗЕР ну ФИН джи си-МА-на","Что ты будешь делать в выходные?"],["Você vai estar em casa à noite?","во-СЕ ВАЙ ис-ТАР эйн КА-за а НОЙ-чи","Ты будешь дома вечером?"],["Eu te ligo à noite.","эу чи ЛИ-гу а НОЙ-чи","Я позвоню тебе вечером."]],
+   task:"Напиши свои планы на завтра тремя фразами."},
+  {t:"Повторение недели", kind:"rev", scope:"week", task:"Договорись о звонке и начни его: время, проверка звука, первое приветствие."}
+ ]},
+{n:8, title:"Настоящий португальский в переписке", meta:"Понимать живые сообщения и не теряться, когда что-то непонятно.",
+ missions:["Фразы для выживания", "Реакции вслух на 10 фраз Габриэля"],
+ dlg:[["Г","Cadê você?","Ты где?"],["А","Tô no trabalho. E você?","Я на работе. А ты?"],["Г","Tô ocupado agora, te escrevo depois.","Сейчас занят, напишу потом."],["А","Blz, até mais tarde!","Окей, до вечера!"]],
+ help:{t:"Помоги Габриэлю: русские сокращения", x:"Габриэль учит спс, пж, щас, оч, кст и норм. Напиши ему пару сообщений в своём обычном стиле и посмотри, поймёт ли он."},
+ L:[
+  {t:"Фразы для выживания", g:"Попросить повторить это нормально: так разговор остаётся на португальском, а не уходит в переводчик.",
+   p:[["Pode repetir, por favor?","ПО-джи хе-пе-ЧИР, пур фа-ВОР","Повтори, пожалуйста."],["Fala mais devagar.","ФА-ла МАЙС джи-ва-ГАР","Говори медленнее."],["O que significa essa palavra?","у ки сиг-ни-ФИ-ка Э-са па-ЛА-вра","Что значит это слово?"],["Como se diz... em português?","КО-му си ДЖИС... эйн пор-ту-ГЕС","Как сказать... по-португальски?"],["Não entendi.","НАУН ин-тен-ДЖИ","Я не поняла."]],
+   task:"Напиши все 5 фраз по памяти."},
+  {t:"Сокращения", g:"Используй их, чтобы понимать сообщения. kkkk это смех, как «ахах» или «ххх».",
+   p:[["vc","во-СЕ","você: ты"],["tb, tbm","там-БЕЙН","também: тоже"],["pq","пур-КЕ","porque, por que: потому что, почему"],["blz","бе-ЛЕ-за","beleza: окей, норм"],["td","ТУ-ду","tudo: всё"],["kkkk","","смех, «ахаха»"]],
+   task:"Расшифруй: vc tb gosta? td blz?"},
+  {t:"Живые реакции", g:"Эти реакции постоянно звучат в разговорах и аудиосообщениях.",
+   p:[["Nossa!","НО-са","Ого!"],["Que demais!","ки джи-МАЙС","Супер!"],["Não acredito!","НАУН а-кре-ДЖИ-ту","Не может быть!"],["Pois é.","ПОЙЗ Э","Вот именно. Ну да."],["Caramba!","ка-РАН-ба","Ничего себе!"]],
+   task:"Отреагируй на: Eu ganhei o campeonato! (я выиграл чемпионат)"},
+  {t:"Сообщения в его стиле", g:"Tá = está, tô = estou, pra = para. Так говорят и пишут в переписке.",
+   p:[["Cadê você?","ка-ДЕ во-СЕ","Ты где?"],["Tô ocupado agora, te escrevo depois.","ТО у-ку-ПА-ду а-ГО-ра, чи ис-КРЕ-ву де-ПОЙС","Я сейчас занят, напишу потом."],["Tudo certo?","ТУ-ду СЭР-ту","Всё в порядке?"],["Já tá dormindo?","ЖА ТА дур-МИН-ду","Ты уже спишь?"]],
+   task:"Ответь на каждое сообщение так, как ответила бы на самом деле."},
+  {t:"Быстрая речь", g:"Слова-паразиты очень часто звучат в аудио и звонках. Né в конце фразы значит «да?, правда?»: É bonito, né?",
+   p:[["Olha...","О-лья","Слушай..."],["Então...","ин-ТАУН","Ну... Итак..."],["Tipo...","ЧИ-пу","Типа..."],["Né?","НЭ","Да? Правда?"]],
+   task:"Посмотри короткое бразильское видео и посчитай, сколько раз услышишь né или tipo."},
+  {t:"Повторение недели", kind:"rev", scope:"week", task:"Переписка на 15 сообщений с Габриэлем без переводчика."}
+ ]},
+{n:9, title:"Семья, культура и праздники", meta:"Говорить о семье и о Новом годе и понять, как празднуют в Бразилии.",
+ missions:["Поздравления и 3 фразы о семье", "2 минуты разговора-тренировки"],
+ dlg:[["А","Como é o Réveillon no Brasil?","Как встречают Новый год в Бразилии?"],["Г","A gente vai pra praia e usa roupa branca.","Мы идём на пляж и надеваем белую одежду."],["А","Na praia? Aqui tem muita neve!","На пляже? А у нас много снега!"],["Г","Nossa! Feliz Ano Novo!","Ого! С Новым годом!"]],
+ help:{t:"Помоги Габриэлю: Новый год по-русски", x:"Габриэль учит С наступающим!, С Новым годом! и как вы отмечаете Новый год?. Расскажи ему про ёлку, Деда Мороза и оливье."},
+ L:[
+  {t:"Семья", g:"Meu и minha = мой и моя; meus и minhas во множественном числе. Pais = родители (и также «отцы»).",
+   p:[["Esta é minha mãe.","ЭС-та э МИ-нья МАЙН","Это моя мама."],["Eu tenho um irmão.","эу ТЕ-нью ун ир-МАУН","У меня есть брат."],["Você tem irmãos?","во-СЕ ТЕЙН ир-МАУНС","У тебя есть братья и сёстры?"],["Meus pais moram em...","МЕУС ПАЙС МО-раун эйн","Мои родители живут в..."]],
+   task:"Представь свою семью четырьмя фразами."},
+  {t:"Праздники в Бразилии", g:"В Бразилии Рождество (25 декабря) отмечают в жару, а на Новый год (Réveillon) надевают белое, идут на пляж и прыгают через семь волн на удачу.",
+   p:[["Feliz Ano Novo!","фе-ЛИС А-ну НО-ву","С Новым годом!"],["Feliz Natal!","фе-ЛИС на-ТАУ","С Рождеством!"],["Boas festas!","БО-ас ФЭС-тас","С праздниками!"],["Como é o Réveillon no Brasil?","КО-му э у хе-ве-ЙОН ну бра-ЗИУ","Как встречают Новый год в Бразилии?"],["Eu te desejo muita felicidade!","эу чи де-ЗЕ-жу МУЙН-та фе-ли-си-ДА-джи","Желаю тебе много счастья!"]],
+   task:"Напиши новогоднее поздравление, которое отправишь Габриэлю."},
+  {t:"Бразилия и Россия", g:"Aqui (здесь) и aí (у тебя там) помогают сравнивать ваши страны.",
+   p:[["Aqui está muito frio.","а-КИ ис-ТА МУЙН-ту ФРИ-у","Здесь очень холодно."],["Aí está calor?","а-И ис-ТА ка-ЛОР","У тебя там жарко?"],["Aqui tem muita neve.","а-КИ ТЕЙН МУЙН-та НЭ-ви","У нас много снега."],["No Brasil é verão agora?","ну бра-ЗИУ э ве-РАУН а-ГО-ра","В Бразилии сейчас лето?"]],
+   task:"Сравни конец года в России и в Бразилии тремя фразами."},
+  {t:"Поддерживать разговор", g:"Вопросы-продолжения превращают короткие ответы в разговор.",
+   p:[["E depois?","и де-ПОЙС","А что потом?"],["Me conta mais!","ми КОН-та МАЙС","Расскажи подробнее!"],["Por que você acha isso?","пур КЕ во-СЕ А-ша И-су","Почему ты так думаешь?"],["Que interessante!","ки ин-те-ре-САН-чи","Как интересно!"]],
+   task:"Напиши вопрос-продолжение на каждую тему: семья, работа и Новый год."},
+  {t:"Закончить разговор", g:"В Бразилии beijo (целую) пишут в конце разговора даже друзьям и родным.",
+   p:[["Preciso ir.","пре-СИ-зу ИР","Мне пора."],["Foi muito bom conversar.","фой МУЙН-ту БОН кон-вер-САР","Было очень приятно поговорить."],["A gente se fala amanhã?","а ЖЕН-чи си ФА-ла а-ма-НЬЯН","Созвонимся завтра?"],["Beijo! Tchau!","БЕЙ-жу! ЧАУ","Целую! Пока!"]],
+   task:"Пятиминутный разговор с Габриэлем: начни, поговори и закончи по-португальски."},
+  {t:"Повторение недели", kind:"rev", scope:"week", task:"Запиши 2 минуты разговора-тренировки для аудиозадания 2."}
+ ]},
+{n:10, title:"Настоящий разговор", meta:"Разговор с Габриэлем на 15 минут: половина по-русски, половина по-португальски.",
+ missions:["Финальная тренировка на 10 минут", "Отрывок разговора с Габриэлем"],
+ dlg:[], help:{t:"Помоги Габриэлю", x:"Договоритесь: первые 7 минут разговора по-русски, следующие 7 по-португальски. Каждый поправляет другого только в конце."},
+ L:[
+  {t:"Самые нужные фразы", kind:"rev", scope:"all", n:12, task:"Повтори всю колоду и отметь фразы, которые ещё даются с трудом."},
+  {t:"Финальная тренировка", kind:"sim", task:"Поговори 10 минут с Габриэлем по плану ниже, не заучивая реплики."},
+  {t:"Итоговый тест", kind:"rev", scope:"all", n:15, task:"Пройди тест и запиши свои ошибки в дневник."},
+  {t:"Разговор с Габриэлем", kind:"sim", task:"Поговорите 15 минут. Потом запиши, что получилось и где ты запнулась."}
+ ]}
+];
+
+const SIM = [
+  ["Начать", "Oi! Tudo bem? Como foi o seu dia?"],
+  ["День", "O que você fez hoje? Eu trabalhei o dia todo."],
+  ["Вкусы", "O que você gosta de fazer? Eu também!"],
+  ["Планы", "O que você vai fazer no fim de semana?"],
+  ["Чувства", "Estou com saudade. É bom estar com você."],
+  ["Праздники", "Como é o Réveillon no Brasil? Feliz Ano Novo!"],
+  ["Если не поняла", "Pode repetir, por favor? Fala mais devagar."],
+  ["Закончить", "Preciso ir. A gente se fala amanhã? Beijo! Tchau!"]
+];
+
+</script>
+<script>
+(function(){
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
+const pron = s => esc(s).replace(/([А-ЯЁ]{2,})|(^|[^а-яёА-ЯЁ])([А-ЯЁ])(?=$|[^а-яёА-ЯЁ])/g, (m,multi,pre,single) => multi ? "<b>"+multi+"</b>" : pre+"<b>"+single+"</b>");
+const iso = d => d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+const parse = s => { const [y,m,d]=s.split("-").map(Number); return new Date(y,m-1,d); };
+const addDays = (s,n) => { const d=parse(s); d.setDate(d.getDate()+n); return iso(d); };
+const today = () => iso(new Date());
+const MON=["янв","фев","мар","апр","мая","июн","июл","авг","сен","окт","ноя","дек"];
+const dshort = s => { const d=parse(s); return d.getDate()+" "+MON[d.getMonth()]; };
+const PLAY = '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 1l9 5-9 5z"/></svg>';
+const plural = (n,a,b,c) => { const m10=n%10, m100=n%100; return m10===1&&m100!==11?a:(m10>=2&&m10<=4&&(m100<10||m100>=20)?b:c); };
+
+const PH={}, LESSONS=[];
+W.forEach(w=>{ w.L.forEach((l,i)=>{ const id="w"+w.n+"l"+(i+1), k=LESSONS.length; const L=Object.assign({},l,{id,k,w,i:i+1,pids:[]});
+  (l.p||[]).forEach((p,j)=>{ const pid=id+"p"+j; PH[pid]={id:pid,pt:p[0],pr:p[1],ru:p[2],nt:p[3]||"",k,src:"Неделя "+w.n}; L.pids.push(pid); });
+  LESSONS.push(L); }); });
+const byId=Object.fromEntries(LESSONS.map(l=>[l.id,l]));
+const weekPids = w => LESSONS.filter(l=>l.w===w).flatMap(l=>l.pids);
+
+const KEY="pt-anastasia-v1";
+const blank=()=>({done:{},cards:{},errors:[],drafts:{},quiz:{},days:[],recall:{}});
+let S=blank();
+try{ const raw=localStorage.getItem(KEY); if(raw) S=Object.assign(blank(), JSON.parse(raw)); }catch(e){}
+function persist(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
+function markDay(){ const t=today(); if(!S.days.includes(t)){ S.days.push(t); if(S.days.length>400) S.days=S.days.slice(-400); } }
+function streak(){ const set=new Set(S.days); let n=0, d=today(); if(!set.has(d)) d=addDays(d,-1);
+  for(let g=0; g<500; g++){ if(set.has(d)){ n++; d=addDays(d,-1); } else if(parse(d).getDay()===0){ d=addDays(d,-1); } else break; } return n; }
+
+const IV=[1,3,7,14,30,60];
+const due = () => Object.entries(S.cards).filter(([id,c])=>PH[id] && c.d<=today()).map(([id])=>id);
+function grade(id, ok){ const c=S.cards[id]||{b:0,d:today()}; if(ok){ c.b=Math.min(c.b+1,IV.length-1); c.d=addDays(today(),IV[c.b]); } else { c.b=0; c.d=addDays(today(),1); } S.cards[id]=c; }
+
+let voice=null, checked=false;
+function pickVoice(){ if(!("speechSynthesis" in window)) return; const v=speechSynthesis.getVoices(); voice=v.find(x=>/^pt[-_]BR/i.test(x.lang))||v.find(x=>/^pt/i.test(x.lang))||null; checked=v.length>0; }
+if("speechSynthesis" in window){ pickVoice(); speechSynthesis.onvoiceschanged=pickVoice; }
+function say(t, slow){
+  if(!("speechSynthesis" in window)){ toast("Этот браузер не умеет читать текст вслух."); return; }
+  pickVoice(); const u=new SpeechSynthesisUtterance(t.replace(/\.\.\./g,"")); u.lang="pt-BR"; if(voice) u.voice=voice; u.rate=slow?0.6:0.92;
+  speechSynthesis.cancel(); speechSynthesis.speak(u);
+  if(checked && !voice) toast("На устройстве нет португальского голоса. Добавь его в настройках языка и озвучивания текста.");
+}
+let tT; function toast(m){ const t=$("#toast"); t.textContent=m; t.hidden=false; clearTimeout(tT); tT=setTimeout(()=>t.hidden=true,3500); }
+const sayBtns = s => `<button class="say" data-say="${esc(s)}">${PLAY} Слушать</button><button class="say" data-say="${esc(s)}" data-slow="1">${PLAY} Медленно</button>`;
+
+let view="hoje", cur=null;
+const TABS=[["hoje","Сегодня"],["curso","Курс"],["revisar","Карточки"],["erros","Дневник ошибок"],["guia","Как это работает"]];
+function renderTabs(){ const n=due().length; $("#tabs").innerHTML=TABS.map(([k,t])=>`<button data-tab="${k}" ${view===k||(view==="aula"&&k==="curso")?'aria-current="page"':''}>${t}${k==="revisar"&&n?` <span class="badge">${n}</span>`:''}</button>`).join(""); }
+function go(v,id){ view=v; cur=id||null; render(); window.scrollTo({top:0}); }
+function render(){ renderTabs(); $("#view").innerHTML=({hoje:vHoje,curso:vCurso,aula:vAula,revisar:vRevisar,erros:vErros,guia:vGuia})[view](); after(); }
+
+const nextLesson = () => LESSONS.find(l=>!S.done[l.id])||null;
+function vHoje(){
+  const nx=nextLesson(), dn=due().length, deck=Object.keys(S.cards).length, doneN=Object.keys(S.done).filter(k=>byId[k]).length, st=streak();
+  const hero = nx ? `<section class="hero"><div class="eyebrow">${nx.k===0?"Начни отсюда":"Следующий урок"} · Неделя ${nx.w.n}, урок ${nx.i}</div><h3>${esc(nx.t)}</h3><p class="muted small" style="margin:0 0 12px">${esc(nx.w.title)}</p><div class="row"><button class="btn" data-open="${nx.id}">Открыть урок</button>${dn?`<button class="btn ghost" data-tab="revisar">Повторить ${dn} ${plural(dn,"карточку","карточки","карточек")}</button>`:""}</div><p class="small muted" style="margin:12px 0 0">Переходи к следующему уроку, только если в конце урока почти все фразы отмечены как «Вспомнила».</p></section>`
+    : `<section class="hero"><div class="eyebrow">Всё пройдено</div><h3>Ты прошла весь курс первого уровня!</h3><p class="muted">Попроси Габриэля о следующем модуле.</p></section>`;
+  return `${hero}<div class="grid" style="margin-top:12px">
+   <div class="stat"><b>${doneN}/${LESSONS.length}</b><span>уроков пройдено</span></div>
+   <div class="stat"><b>${deck}</b><span>фраз в колоде</span></div>
+   <div class="stat"><b>${dn}</b><span>карточек на сегодня</span></div>
+   <div class="stat"><b>${st}</b><span>${plural(st,"день","дня","дней")} подряд</span></div></div>
+  <h2>Каждый урок по шагам</h2>
+  <div class="card stack small">
+   <div><b>Сначала</b> · карточки на сегодня</div>
+   <div><b>5 мин</b> · повторение в начале, не подглядывая в ответ</div>
+   <div><b>10 мин</b> · новые фразы: слушай и повторяй</div>
+   <div><b>5 мин</b> · грамматика на практике</div>
+   <div><b>10 мин</b> · диалог и аудирование</div>
+   <div><b>5 мин</b> · речь: запиши себя и сравни</div>
+   <div><b>5 мин</b> · письмо: настоящее сообщение Габриэлю</div>
+   <div><b>3 мин</b> · повторение в конце</div></div>`;
+}
+function vCurso(){
+  return `<p class="legend">В произношении ударный слог выделен <b style="color:var(--red)">ЗАГЛАВНЫМИ</b> буквами. Уроки идут по порядку, но открыть можно любой.</p>
+  <section class="phase"><div class="eyebrow">Уровень A1</div><h2 style="margin-top:4px">Первые разговоры</h2>` +
+  W.map(w=>{ const ls=LESSONS.filter(l=>l.w===w), d=ls.filter(l=>S.done[l.id]).length, open=ls.some(l=>l===nextLesson());
+    return `<details class="week" ${open?"open":""}><summary><span class="wnum">Н${w.n}</span><span class="wbody"><b>${esc(w.title)}</b><span class="small muted">${d}/${ls.length} ${plural(ls.length,"урок","урока","уроков")}</span><span class="prog"><i style="width:${Math.round(d/ls.length*100)}%"></i></span></span></summary>
+    <div class="lessons">${ls.map(l=>`<button class="lrow" data-open="${l.id}"><span class="tick ${S.done[l.id]?"on":""}">${S.done[l.id]?"✓":""}</span><span class="lt">${l.i}. ${esc(l.t)}</span><span class="ld">${l.pids.length?l.pids.length+" "+plural(l.pids.length,"фраза","фразы","фраз"):(l.kind==="sim"?"разговор":"повторение")}</span></button>`).join("")}</div></details>`; }).join("") + `</section>`;
+}
+function rng(seed){ let s=seed*9301+49297; return ()=>{ s=(s*9301+49297)%233280; return s/233280; }; }
+function shuffle(a,r){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(r()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function openingReview(L){
+  const r=rng(L.k+7), out=[]; const prev=LESSONS.slice(0,L.k).filter(l=>l.pids.length); const last=prev[prev.length-1];
+  const prevWeek=LESSONS.filter(l=>l.w.n===L.w.n-1).flatMap(l=>l.pids);
+  const older=LESSONS.filter(l=>l.w.n<L.w.n-1).flatMap(l=>l.pids);
+  const take=(pool,n)=>{ shuffle(pool.filter(x=>!out.includes(x)),r).slice(0,n).forEach(x=>out.push(x)); };
+  if(last) take(last.pids,1);
+  take(prevWeek.length?prevWeek:LESSONS.filter(l=>l.w===L.w&&l.k<L.k).flatMap(l=>l.pids),2);
+  take(older.length?older:LESSONS.filter(l=>l.k<L.k).flatMap(l=>l.pids),5-out.length);
+  return out;
+}
+const phrCard = id => { const p=PH[id]; return `<div class="phr"><div class="ru">${esc(p.pt)}</div>${p.pr?`<div class="lbl">Произношение</div><div class="pr">${pron(p.pr)}</div>`:""}<div class="lbl">Значение</div><div class="pt">${esc(p.ru)}</div>${p.nt?`<div class="nt">${esc(p.nt)}</div>`:""}<div class="acts">${sayBtns(p.pt)}</div></div>`; };
+const revItem = id => { const p=PH[id]; return `<div class="ritem"><div class="src">${esc(p.src)}</div><div class="q">${esc(p.ru)}</div><button class="linkbtn" data-reveal style="color:var(--ink)">Показать ответ</button><div class="a" hidden><div style="font-size:19px;font-weight:600;color:var(--ink)">${esc(p.pt)}</div><div class="small pron">${pron(p.pr)}</div><div class="acts">${sayBtns(p.pt)}</div></div></div>`; };
+const step=(n,t,time,body)=>`<section class="step"><div class="sh"><span class="n">${n}</span><h3>${t}</h3><span class="t">${time}</span></div>${body}</section>`;
+
+let QZ={};
+function quizPool(L){ if(L.scope==="week") return weekPids(L.w); return LESSONS.filter(l=>l.k<L.k).flatMap(l=>l.pids).filter(id=>PH[id].pr); }
+function makeQuiz(L){ const pool=quizPool(L), r=rng(L.k*13+Date.now()%997), n=Math.min(L.n||8,pool.length);
+  QZ[L.id]={qs:shuffle(pool,r).slice(0,n).map(id=>({id,opts:shuffle([id,...shuffle(pool.filter(x=>x!==id&&PH[x].pt!==PH[id].pt),r).slice(0,3)],r),pick:null})),i:0,score:0,end:false}; }
+function quizHTML(L){
+  if(!QZ[L.id]) makeQuiz(L); const q=QZ[L.id], best=S.quiz[L.id];
+  if(q.end){ const pct=Math.round(q.score/q.qs.length*100); return `<div class="card"><div class="eyebrow">Результат</div><h3 style="font-family:var(--display);font-weight:500;font-size:22px;margin:6px 0">${q.score} из ${q.qs.length} (${pct}%)</h3><p class="small muted">${pct>=80?"Отлично. Фразы с ошибками уже вернулись в колоду на завтра.":"Фразы с ошибками вернулись в колоду на завтра. Повтори их и пройди тест ещё раз."}</p>${best!=null?`<p class="small muted">Лучший результат: ${best}%</p>`:""}<button class="btn ghost" data-quiz-reset="${L.id}">Пройти ещё раз</button></div>`; }
+  const it=q.qs[q.i], p=PH[it.id];
+  return `<div class="card quiz"><div class="row" style="justify-content:space-between"><span class="small muted">Вопрос ${q.i+1} из ${q.qs.length}</span><span class="small muted">Верно: ${q.score}</span></div><div class="bar" style="margin:8px 0 14px"><i style="width:${q.i/q.qs.length*100}%"></i></div>
+  <div class="lbl">Как сказать по-португальски</div><div style="font-size:19px;font-weight:600;margin-bottom:4px">${esc(p.ru)}</div>
+  ${it.opts.map(o=>{ let c=""; if(it.pick!=null){ if(o===it.id) c="right"; else if(o===it.pick) c="wrong"; } return `<button class="opt ${c}" data-q="${L.id}" data-o="${o}" ${it.pick!=null?"disabled":""}>${esc(PH[o].pt)}</button>`; }).join("")}
+  ${it.pick!=null?`<div class="row" style="margin-top:12px;justify-content:space-between"><span class="small pron">${pron(p.pr)} <button class="say" data-say="${esc(p.pt)}">${PLAY} Слушать</button></span><button class="btn" data-qnext="${L.id}">${q.i+1<q.qs.length?"Дальше":"Результат"}</button></div>`:""}</div>`;
+}
+function vAula(){
+  const L=byId[cur]; if(!L) return vCurso();
+  const w=L.w, isRev=L.kind==="rev", isSim=L.kind==="sim";
+  const mIdx = w.n===10 ? (L.i===2?0:(L.i===4?1:-1)) : (L.i===3?0:(L.i===6?1:-1));
+  const errs=shuffle(S.errors, rng(L.k)).slice(0,2), pids=L.pids, recall=S.recall[L.id]||{}, rv=openingReview(L);
+  let h=`<button class="back" data-tab="curso">← Курс</button><div class="lesson-head"><div class="eyebrow">Неделя ${w.n} · Урок ${L.i} из ${w.L.length}</div><h2>${esc(L.t)}</h2><p class="muted" style="margin:0">${esc(w.title)}. ${esc(w.meta)}</p></div>`;
+  h+=step(1,"Повторение в начале","5 мин", rv.length||errs.length ? `<p class="small muted" style="margin-top:0">Прочитай по-русски и скажи фразу по-португальски вслух, а потом проверь ответ.</p><div class="rev">${rv.map(revItem).join("")}${errs.map(e=>`<div class="ritem"><div class="src">Из дневника ошибок</div><div class="q" style="white-space:pre-wrap">${esc(e.t)}</div></div>`).join("")}</div>` : `<p class="small muted" style="margin-top:0">Это первый урок: повторение начнётся со следующего.</p>`);
+  if(isRev){
+    h+=step(2,"Тест",(L.n||8)+" вопросов",quizHTML(L));
+    h+=step(3,"Все фразы","10 мин",`<p class="small muted" style="margin-top:0">Послушай каждую фразу и повтори вслух.</p><div class="stack">${quizPool(L).slice(-(L.scope==="week"?40:24)).map(phrCard).join("")}</div>`);
+  } else if(isSim){
+    h+=step(2,"План разговора","не заучивай",`<p class="small muted" style="margin-top:0">Это темы, а не текст наизусть. Если запнёшься, используй фразы для выживания.</p><div class="stack">${SIM.map(([t,s])=>`<div class="phr"><div class="lbl" style="margin-top:0">${esc(t)}</div><div class="ru" style="font-size:19px">${esc(s)}</div><div class="acts">${sayBtns(s)}</div></div>`).join("")}</div>`);
+  } else {
+    h+=step(2,"Новые фразы","10 мин",`<div class="stack">${pids.map(phrCard).join("")}</div>`);
+    h+=step(3,"Грамматика на практике","5 мин",`<div class="gram">${esc(L.g)}</div>`);
+    if(w.dlg.length) h+=step(4,"Диалог","10 мин",`<p class="small muted" style="margin-top:0">Послушай, попробуй понять без перевода, а потом нажми на размытый текст.</p><div class="dlg">${w.dlg.map(([who,s,ru])=>`<div class="bub ${who==="А"?"g":""}"><div class="who">${who==="А"?"Анастасия":"Габриэль"}</div><div class="ru">${esc(s)}</div><div class="pt hide" data-unblur>${esc(ru)}</div><div class="acts" style="margin-top:4px"><button class="say" data-say="${esc(s)}">${PLAY} Слушать</button></div></div>`).join("")}</div><div class="row" style="margin-top:10px"><button class="say" data-dlg="${w.n}">${PLAY} Весь диалог</button></div>`);
+  }
+  const mission = mIdx>=0&&w.missions[mIdx] ? `<div class="mission" style="margin-bottom:10px"><b>Аудиозадание ${mIdx+1}:</b> ${esc(w.missions[mIdx])}. Запиши на диктофон или голосовым в Telegram и отправь Габриэлю: он передаст запись преподавательнице на проверку.</div>` : "";
+  h+=step(isRev||isSim?4:5,"Речь","5 мин",`${mission}<div class="card rec"><p class="small" style="margin:0">Выбери фразу, послушай образец, запиши себя и сравни. На телефоне кнопка откроет диктофон или файлы.</p><input type="file" accept="audio/*" capture id="rec-${L.id}" aria-label="Записать или выбрать аудио"><audio controls hidden id="play-${L.id}"></audio><p class="small muted" style="margin:0">Запись остаётся только на этом устройстве.</p></div>`);
+  h+=step(isRev||isSim?5:6,"Письмо","5 мин",`<p style="margin-top:0">${esc(L.task)}</p><textarea id="draft-${L.id}" data-draft="${L.id}" placeholder="Пиши здесь по-португальски...">${esc(S.drafts[L.id]||"")}</textarea><div class="row" style="margin-top:8px"><button class="btn ghost" data-copy="${L.id}">Копировать текст</button><span class="small muted">Отправь Габриэлю: он поможет с проверкой.</span></div>`);
+  if(pids.length) h+=step(7,"Повторение в конце","3 мин",`<p class="small muted" style="margin-top:0">Не глядя наверх, вспомни фразу по-португальски. Отмечай честно: забытые вернутся завтра.</p><div class="close-list">${pids.map(id=>`<div class="cl"><span class="q">${esc(PH[id].ru)}</span><span class="seg"><button class="y ${recall[id]===1?"on":""}" data-recall="${L.id}|${id}|1">Вспомнила</button><button class="n ${recall[id]===0?"on":""}" data-recall="${L.id}|${id}|0">Забыла</button></span></div>`).join("")}</div>`);
+  if(w.help && (L.i===1||isRev)) h+=`<section class="step"><div class="sh"><span class="n">+</span><h3>${esc(w.help.t)}</h3></div><div class="card"><p class="small" style="margin:0">${esc(w.help.x)}</p></div></section>`;
+  const done=!!S.done[L.id], nx=LESSONS[L.k+1];
+  h+=`<section class="step"><div class="card row" style="justify-content:space-between"><span>${done?'<span class="chip done">Урок пройден</span>':'<span class="small muted">Все шаги выполнены?</span>'}</span><span class="row">${done?`<button class="btn ghost" data-undo="${L.id}">Отменить</button>`:`<button class="btn ok" data-done="${L.id}">Урок пройден</button>`}${nx?`<button class="btn ghost" data-open="${nx.id}">Следующий урок →</button>`:""}</span></div></section>`;
+  return h;
+}
+let RV={q:[],i:0,show:false,mode:"ru",total:0,ok:0};
+function startReview(){ RV.q=shuffle(due(),rng(Date.now()%9999)); RV.i=0; RV.show=false; RV.total=RV.q.length; RV.ok=0; }
+function vRevisar(){
+  if(!RV.q.length) startReview();
+  const seg=`<div class="row" style="margin-bottom:12px"><span class="small muted">Режим:</span><span class="seg"><button class="y ${RV.mode==="ru"?"on":""}" data-mode="ru">Русский → португальский</button><button class="y ${RV.mode==="pt"?"on":""}" data-mode="pt">Слушать португальский</button></span></div>`;
+  if(!RV.q.length) return `${seg}<div class="card empty"><h3>На сегодня карточек нет</h3><p class="muted small">Пройди следующий урок, чтобы получить новые карточки. Они возвращаются через 1, 3, 7, 14, 30 и 60 дней.</p><button class="btn ghost" data-tab="hoje">На главную</button></div>`;
+  if(RV.i>=RV.q.length) return `${seg}<div class="card empty"><div class="eyebrow">Повторение закончено</div><h3 style="font-family:var(--display);font-weight:500;font-size:22px;margin:8px 0">Вспомнила ${RV.ok} из ${RV.total}</h3><p class="muted small">Забытые вернутся завтра.</p><button class="btn" data-tab="hoje">На главную</button></div>`;
+  const id=RV.q[RV.i], p=PH[id];
+  const front = RV.mode==="ru" ? `<div class="lbl">Скажи по-португальски</div><div class="pt">${esc(p.ru)}</div>` : `<div class="lbl">Послушай и пойми</div><div><button class="btn" data-say="${esc(p.pt)}">${PLAY} Слушать</button></div>`;
+  const back = `<div class="ru">${esc(p.pt)}</div><div class="small pron">${pron(p.pr)}</div>${RV.mode==="pt"?`<div class="pt">${esc(p.ru)}</div>`:""}${p.nt?`<div class="small muted">${esc(p.nt)}</div>`:""}<div class="acts" style="justify-content:center">${sayBtns(p.pt)}</div>`;
+  return `${seg}<div class="row" style="justify-content:space-between;margin-bottom:6px"><span class="small muted">${RV.i+1} из ${RV.q.length} · ${esc(p.src)}</span></div><div class="bar" style="margin-bottom:12px"><i style="width:${RV.i/RV.q.length*100}%"></i></div>
+  <div class="card fc">${front}${RV.show?`<hr style="border:0;border-top:1px dashed var(--line);width:100%;margin:10px 0">${back}`:""}</div>
+  <div class="row" style="justify-content:center;margin-top:12px">${RV.show?`<button class="btn red" data-grade="0">Забыла</button><button class="btn ok" data-grade="1">Вспомнила</button>`:`<button class="btn" data-flip>Показать ответ</button>`}</div>`;
+}
+function vErros(){
+  return `<p class="muted">Записывай сюда каждое исправление: неправильную фразу, правильную и почему. Две записи появляются в повторении в начале каждого урока.</p>
+  <div class="card stack"><label for="err-new" class="lbl" style="margin:0">Новое исправление</label><textarea id="err-new" placeholder="Например: Eu estou cansado → Eu estou cansada (я женщина)"></textarea><div><button class="btn" data-adderr>Добавить в дневник</button></div></div>
+  <h2>${S.errors.length} ${plural(S.errors.length,"исправление","исправления","исправлений")}</h2>
+  <div class="stack">${S.errors.slice().reverse().map(e=>`<div class="err"><p>${esc(e.t)}<small>${dshort(e.d)}</small></p><button class="linkbtn" data-delerr="${e.id}">Удалить</button></div>`).join("")||`<div class="card empty muted small">Пока исправлений нет. После каждого аудиозадания записывай сюда то, что тебе поправили.</div>`}</div>`;
+}
+function vGuia(){
+  return `<div class="card"><ol class="guide" style="margin:0;padding-left:20px">
+  <li><b>Иди по порядку, в своём темпе.</b> Можно проходить несколько уроков в день, но переходи дальше, только если в конце урока почти все фразы отмечены как «Вспомнила». Урок 6 каждой недели это повторение с тестом.</li>
+  <li><b>Каждый урок начинается и заканчивается повторением.</b> В начале смешиваются фразы из прошлого урока, прошлой недели и более старые. В конце забытые фразы возвращаются в колоду.</li>
+  <li><b>Начинай каждый день с карточек.</b> Карточки возвращаются через 1, 3, 7, 14, 30 и 60 дней.</li>
+  <li><b>Аудиозадание каждые 3 урока.</b> Запиши себя и отправь Габриэлю: он передаст запись преподавательнице на проверку.</li>
+  <li><b>Записывай ошибки в дневник.</b> Они будут появляться в повторении, пока не станут правильными.</li>
+  <li><b>Голос-образец берётся из твоего устройства.</b> Если португальского не слышно, добавь португальский (Бразилия) голос в настройках языка или озвучивания текста.</li>
+  <li><b>Прогресс сохраняется в этом браузере на этом устройстве.</b> Лучше заниматься всегда в одном и том же браузере.</li></ol></div>
+  <h2>Как читать произношение</h2>
+  <div class="card stack small">
+   <div><b>ЗАГЛАВНЫЕ</b> буквы: ударный слог, например о-бри-ГА-да.</div>
+   <div><b>Н</b> после гласной в носовых звуках почти не слышна: воздух идёт через нос (não, mãe, bem).</div>
+   <div><b>Х</b> в начале слова: бразильское R, как в Rio.</div>
+   <div><b>чи, джи</b>: так звучат te и de, ti и di.</div>
+   <div>Запись кириллицей это только подсказка на первое время. Главный ориентир всегда аудио.</div></div>`;
+}
+function after(){
+  const f=document.querySelector('input[type=file][id^="rec-"]');
+  if(f) f.addEventListener("change",()=>{ const file=f.files&&f.files[0]; if(!file) return; const a=document.getElementById(f.id.replace("rec-","play-")); a.src=URL.createObjectURL(file); a.hidden=false; });
+  document.querySelectorAll("[data-draft]").forEach(t=>{ let tm; t.addEventListener("input",()=>{ clearTimeout(tm); tm=setTimeout(()=>{ S.drafts[t.dataset.draft]=t.value; persist(); },700); }); });
+}
+function playDialog(n){ const w=W.find(x=>x.n==n); if(!w||!("speechSynthesis" in window)) return; speechSynthesis.cancel(); const q=w.dlg.map(d=>d[1]);
+  (function next(){ const t=q.shift(); if(!t) return; pickVoice(); const u=new SpeechSynthesisUtterance(t); u.lang="pt-BR"; if(voice) u.voice=voice; u.rate=0.85; u.onend=()=>setTimeout(next,450); speechSynthesis.speak(u); })(); }
+document.addEventListener("click",e=>{
+  const b=e.target.closest("button,[data-unblur]"); if(!b) return; const d=b.dataset;
+  if(d.tab){ if(d.tab==="revisar") startReview(); go(d.tab); return; }
+  if(d.open){ go("aula",d.open); return; }
+  if(d.say!=null){ say(d.say,!!d.slow); return; }
+  if(d.dlg){ playDialog(d.dlg); return; }
+  if(d.unblur!=null){ b.classList.toggle("hide"); return; }
+  if(d.reveal!=null){ const a=b.nextElementSibling; a.hidden=!a.hidden; b.textContent=a.hidden?"Показать ответ":"Скрыть"; return; }
+  if(d.recall){ const [lid,pid,v]=d.recall.split("|"); S.recall[lid]=S.recall[lid]||{}; S.recall[lid][pid]=+v; persist(); b.parentElement.querySelectorAll("button").forEach(x=>x.classList.remove("on")); b.classList.add("on"); return; }
+  if(d.done){ const L=byId[d.done]; S.done[L.id]=1; const rc=S.recall[L.id]||{}; L.pids.forEach(id=>{ if(!S.cards[id]) S.cards[id]={b:rc[id]===1?1:0,d:addDays(today(),rc[id]===1?3:1)}; else if(rc[id]===0) grade(id,false); }); markDay(); persist(); toast("Урок пройден."+(L.pids.length?" "+L.pids.length+" "+plural(L.pids.length,"фраза добавлена","фразы добавлены","фраз добавлено")+" в колоду.":"")); render(); return; }
+  if(d.undo){ delete S.done[d.undo]; persist(); render(); return; }
+  if(d.copy){ const t=document.getElementById("draft-"+d.copy), v=t.value; if(!v.trim()){ toast("Сначала напиши что-нибудь."); return; } (navigator.clipboard?navigator.clipboard.writeText(v):Promise.reject()).then(()=>toast("Текст скопирован")).catch(()=>{ t.select(); toast("Текст выделен: скопируй его через меню"); }); return; }
+  if(d.q){ const q=QZ[d.q], it=q.qs[q.i]; if(it.pick!=null) return; it.pick=d.o; if(d.o===it.id) q.score++; else { grade(it.id,false); persist(); } $("#view").innerHTML=vAula(); after(); return; }
+  if(d.qnext){ const q=QZ[d.qnext]; q.i++; if(q.i>=q.qs.length){ q.end=true; S.quiz[d.qnext]=Math.max(S.quiz[d.qnext]||0,Math.round(q.score/q.qs.length*100)); markDay(); persist(); } $("#view").innerHTML=vAula(); after(); return; }
+  if(d.quizReset){ delete QZ[d.quizReset]; $("#view").innerHTML=vAula(); after(); return; }
+  if(d.flip!=null){ RV.show=true; render(); if(RV.mode==="ru") say(PH[RV.q[RV.i]].pt,false); return; }
+  if(d.grade!=null){ const ok=d.grade==="1"; grade(RV.q[RV.i],ok); if(ok) RV.ok++; RV.i++; RV.show=false; markDay(); persist(); render(); if(RV.mode==="pt"&&RV.i<RV.q.length) setTimeout(()=>say(PH[RV.q[RV.i]].pt,false),150); return; }
+  if(d.mode){ RV.mode=d.mode; RV.show=false; render(); return; }
+  if(d.adderr!=null){ const t=$("#err-new"), v=t.value.trim(); if(!v) return; S.errors.push({id:"e"+Date.now(),t:v.slice(0,600),d:today()}); if(S.errors.length>300) S.errors=S.errors.slice(-300); persist(); render(); toast("Исправление добавлено"); return; }
+  if(d.delerr){ S.errors=S.errors.filter(x=>x.id!==d.delerr); persist(); render(); return; }
+});
+render();
+})();
+
+</script>
+</body>
+</html>
